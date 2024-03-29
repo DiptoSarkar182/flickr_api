@@ -1,0 +1,25 @@
+<div class="max-w-4xl mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Flickr Photo Gallery</h1>
+
+  <%= form_with url: index_path, method: :get, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |form| %>
+    <div class="mb-4">
+      <%= form.label :user_id, "Flickr User ID:", class: "block text-gray-700 font-bold mb-2" %>
+      <%= form.text_field :user_id, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+    <%= form.submit "Fetch Photos", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <% if @photos.present? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <% @photos.each do |photo| %>
+        <img src="<%= Flickr.url_n(photo) %>" class="w-full h-auto rounded-lg shadow-md" />
+      <% end %>
+    </div>
+  <% end %>
+</div>
